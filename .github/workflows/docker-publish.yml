@@ -63,7 +63,9 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{env.DH_REPO_NAME}}:${{steps.get-version.outputs.dh_tag_version}}
+          tags: | 
+            ${{env.DH_REPO_NAME}}:${{steps.get-version.outputs.dh_tag_version}}
+            ${{env.DH_REPO_NAME}}:latest
           labels: ${{ steps.get-version.outputs.dh_tag_version }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

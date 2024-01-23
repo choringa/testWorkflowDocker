@@ -1,3 +1,3 @@
 FROM alpine:latest
 RUN apk update
-RUN echo "hola3" > hola.txt
+RUN echo "hola nea" > hola.txt
