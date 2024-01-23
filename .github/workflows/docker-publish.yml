@@ -46,8 +46,8 @@ jobs:
         if: github.event_name != 'pull_request'
         run: |
           ls -la
-          echo "::set-output name=dh_tag_version::$(cat version.py | grep "VERSION = " | awk -F "v|'" '{print $3}')"
-
+          echo "dh_tag_version=$(cat version.py | grep "VERSION = " | awk -F "v|'" '{print $3}')" >> $GITHUB_OUTPUT
+#echo "::set-output name=dh_tag_version::$(cat version.py | grep "VERSION = " | awk -F "v|'" '{print $3}')"
 
       # Set up BuildKit Docker container builder to be able to build
       # multi-platform images and export cache
@@ -71,7 +71,7 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.get-version.outputs.dh_tag_version }}
+          tags: ${{steps.get-version.outputs.dh_tag_version}}
           labels: ${{ steps.get-version.outputs.dh_tag_version }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
