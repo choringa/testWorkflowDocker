@@ -50,8 +50,10 @@ jobs:
           echo 5
           echo ${{ steps.get-version.outputs.dh_tag_version }}
           echo 6
-          if [[ ${{ steps.get-version.outputs.dh_tag_version }} -le "$current_version" ]]; then
-            echo "yuca"
+          if [ ${{ steps.get-version.outputs.dh_tag_version }} -le "$current_version" ]; then
+            echo "Version to publish must me greater than current version"
+            echo "current version: " "$current_version"
+            echo "version to publish: " ${{ steps.get-version.outputs.dh_tag_version }}
             exit 1
           else
             echo "All OK" 
