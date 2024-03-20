@@ -45,13 +45,10 @@ jobs:
         if: github.event_name != 'pull_request'
         run: |
           current_version=$(curl https://vms.globant.com/api/v1.0/cli_report/api_status | jq -r .cli_last_version | awk -F "v" '{print $2}')
-          echo 4
-          echo -n "$current_version"
-          echo 5
+          echo "Current version: $current_version"
           echo ${{ steps.get-version.outputs.dh_tag_version }}
-          echo 6
           latest_from_sort=$(echo -e "$ver1\n$current_version" | sort -r | head -n1)
-          if [  ${{ steps.get-version.outputs.dh_tag_version }} == "$current_version" -o "$latest_from_sort" == "$current_version" ]
+          if [  ${{ steps.get-version.outputs.dh_tag_version }} == "$current_version" -o "$latest_from_sort" == "$current_version" ]; then
             echo "Version to publish must me greater than current version"
             echo "current version: " "$current_version"
             echo "version to publish: " ${{ steps.get-version.outputs.dh_tag_version }}
