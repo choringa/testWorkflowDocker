@@ -50,8 +50,9 @@ jobs:
           latest_from_sort=$(echo -e "${{ steps.get-version.outputs.dh_tag_version }}\n$current_version" | sort -r | head -n1)
           echo "Latest from sort: $latest_from_sort"
           regex='^[0-9]+\.[0-9]+\.[0-9]+$'
-          if [ ${{ steps.get-version.outputs.dh_tag_version }} =~ "$regex" ]then;
+          if [ ${{ steps.get-version.outputs.dh_tag_version }} =~ "$regex" ]; then
             echo "Version must be in format vn.n.n whew n is an integer. eg: v1.6.9"
+            exit 1
           fi
           if [  ${{ steps.get-version.outputs.dh_tag_version }} = "$current_version" -o "$latest_from_sort" = "$current_version" ]; then
             echo "Version to publish must me greater than current version"
