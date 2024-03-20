@@ -51,7 +51,7 @@ jobs:
           echo 3
           current_version=$(curl https://vms.globant.com/api/v1.0/cli_report/api_status | jq -r .cli_last_version | awk -F "v" '{print $2}')
           echo 4
-          echo "$current_version"
+          echo -n "$current_version"
           echo 5
           if [[ ${{ steps.get-version.outputs.dh_tag_version }} -le "$current_version" ]]; then
             echo "Version must be greater than " $current_version ". Change it on the settings.py file.
