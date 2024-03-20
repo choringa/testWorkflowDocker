@@ -48,6 +48,8 @@ jobs:
           echo 4
           echo -n "$current_version"
           echo 5
+          echo ${{ steps.get-version.outputs.dh_tag_version }}
+          echo 6
           if [[ ${{ steps.get-version.outputs.dh_tag_version }} -le "$current_version" ]]; then
             echo "yuca"
             exit 1
