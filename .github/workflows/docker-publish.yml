@@ -54,6 +54,8 @@ jobs:
           echo ${current_version}
           echo 3.2
           echo ${{env.current_version}}
+          echo 3.3
+          echo $current_version
           echo 4
           if [[ ${{steps.get-version.outputs.dh_tag_version}} -le '$current_version' ]]; then
             echo "Version must be greater than " $current_version ". Change it on the settings.py file.
