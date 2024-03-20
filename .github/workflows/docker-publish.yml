@@ -47,7 +47,9 @@ jobs:
           echo 1
           curl https://vms.globant.com/api/v1.0/cli_report/api_status | jq -r .cli_last_version | awk -F "v" '{print $2}'
           echo 2
-          echo "current_version=$(curl https://vms.globant.com/api/v1.0/cli_report/api_status | jq -r .cli_last_version | awk -F "v" '{print $2}')" >> $GITHUB_ENV
+          echo "current_version=$(curl https://vms.globant.com/api/v1.0/cli_report/api_status | jq -r .cli_last_version | awk -F "v" '{print $2}')"
+          echo 2.1
+          current_version=$(curl https://vms.globant.com/api/v1.0/cli_report/api_status | jq -r .cli_last_version | awk -F "v" '{print $2}')
           echo 3
           echo '$current_version'
           echo 3.1
@@ -58,6 +60,8 @@ jobs:
           echo $current_version
           echo 3.4
           echo ${{ env.current_version }}
+          echo 3.5
+          echo "$current_version"
           echo 4
           if [[ ${{steps.get-version.outputs.dh_tag_version}} -le '$current_version' ]]; then
             echo "Version must be greater than " $current_version ". Change it on the settings.py file.
