@@ -45,10 +45,12 @@ jobs:
         if: github.event_name != 'pull_request'
         run: |
           echo 1
-          curl --version
           curl https://vms.globant.com/api/v1.0/cli_report/api_status | jq -r .cli_last_version | awk -F "v" '{print $2}'
-          echo "current_version=$(curl https://vms.globant.com/api/v1.0/cli_report/api_status | jq -r .cli_last_version | awk -F "v" '{print $2}')"
           echo 2
+          echo "current_version=$(curl https://vms.globant.com/api/v1.0/cli_report/api_status | jq -r .cli_last_version | awk -F "v" '{print $2}')"
+          echo 3
+          echo $current_version
+          echo 4
           if [[ ${{steps.get-version.outputs.dh_tag_version}} -le $current_version ]]; then
             echo "Version must be greater than " $current_version ". Change it on the settings.py file.
             exit 1
