@@ -46,22 +46,29 @@ jobs:
         run: |
           current_version=$(curl https://vms.globant.com/api/v1.0/cli_report/api_status | jq -r .cli_last_version | awk -F "v" '{print $2}')
           echo "Current version: $current_version"
-          echo "Version wanted to be deployed: ${{ steps.get-version.outputs.dh_tag_version }}
+          version_tobe_deployed=${{ steps.get-version.outputs.dh_tag_version }}
+          echo "Version to be deployed: $version_tobe_deployed"
           latest_from_sort=$(echo -e "${{ steps.get-version.outputs.dh_tag_version }}\n$current_version" | sort -r | head -n1)
-          if ! [[ ${{ steps.get-version.outputs.dh_tag_version }} =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo 'Version must be in format vn.n.n whew n is an integer (e.g.: v1.6.9). Ur version: ' ${{ steps.get-version.outputs.dh_tag_version }}
-            exit 1
+          echo "Latest from sort: $latest_from_sort"
+          if [[ ${{ steps.get-version.outputs.dh_tag_version }} =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "todo good"
           else
-            echo "Version format OK"
+            echo "Version must be in format vn.n.n whew n is an integer. eg: v1.6.9"
           fi
           
-          if [  ${{ steps.get-version.outputs.dh_tag_version }} = "$current_version" -o "$latest_from_sort" = "$current_version" ]; then
+          if ! [[ ${{ steps.get-version.outputs.dh_tag_version }} =~ "^[0-9]+\.[0-9]+\.[0-9]+$" ]]; then
+            echo "todo mal"
+          else
+            echo "Todo re mal"
+          fi
+          
+          if [  1.6.1 = "$current_version" -o "$latest_from_sort" = "$current_version" ]; then
             echo "Version to publish must me greater than current version"
             echo "current version: " "$current_version"
             echo "version to publish: " ${{ steps.get-version.outputs.dh_tag_version }}
             exit 1
           else
-            echo "OK Version to deploy"
+            echo "OK Version to deploy: ${{ steps.get-version.outputs.dh_tag_version }}"
           fi
 
       # Set up BuildKit Docker container builder to be able to build
