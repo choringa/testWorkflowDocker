@@ -51,6 +51,8 @@ jobs:
           if ! [[ ${{ steps.get-version.outputs.dh_tag_version }} =~ "^[0-9]+\.[0-9]+\.[0-9]+$" ]]; then
             echo 'Version must be in format vn.n.n whew n is an integer (e.g.: v1.6.9). Ur version: ' ${{ steps.get-version.outputs.dh_tag_version }}
             exit 1
+          else
+            echo "Version format OK"
           fi
           
           if [  ${{ steps.get-version.outputs.dh_tag_version }} = "$current_version" -o "$latest_from_sort" = "$current_version" ]; then
