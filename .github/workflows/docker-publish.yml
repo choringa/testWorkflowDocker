@@ -48,7 +48,7 @@ jobs:
           echo "Current version: $current_version"
           echo "Version wanted to be deployed: ${{ steps.get-version.outputs.dh_tag_version }}
           latest_from_sort=$(echo -e "${{ steps.get-version.outputs.dh_tag_version }}\n$current_version" | sort -r | head -n1)
-          if ! [[ ${{ steps.get-version.outputs.dh_tag_version }} =~ "^[0-9]+\.[0-9]+\.[0-9]+$" ]]; then
+          if ! [[ ${{ steps.get-version.outputs.dh_tag_version }} =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo 'Version must be in format vn.n.n whew n is an integer (e.g.: v1.6.9). Ur version: ' ${{ steps.get-version.outputs.dh_tag_version }}
             exit 1
           else
@@ -63,7 +63,6 @@ jobs:
           else
             echo "OK Version to deploy"
           fi
-          
 
       # Set up BuildKit Docker container builder to be able to build
       # multi-platform images and export cache
