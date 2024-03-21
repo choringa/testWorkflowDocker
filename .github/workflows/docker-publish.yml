@@ -52,12 +52,15 @@ jobs:
           if ! [[ ${{ steps.get-version.outputs.dh_tag_version }} =~ '^[0-9]+\.[0-9]+\.[0-9]+$' ]]; then
             echo "Version must be in format vn.n.n whew n is an integer. eg: v1.6.9"
             exit 1
-          if [  ${{ steps.get-version.outputs.dh_tag_version }} = "$current_version" -o "$latest_from_sort" = "$current_version" ]; then
+          elif [  ${{ steps.get-version.outputs.dh_tag_version }} = "$current_version" -o "$latest_from_sort" = "$current_version" ]; then
             echo "Version to publish must me greater than current version"
             echo "current version: " "$current_version"
             echo "version to publish: " ${{ steps.get-version.outputs.dh_tag_version }}
             exit 1
+          else
+            echo "OK Version to deploy: v${{ steps.get-version.outputs.dh_tag_version }}"
           fi
+          
 
       # Set up BuildKit Docker container builder to be able to build
       # multi-platform images and export cache
