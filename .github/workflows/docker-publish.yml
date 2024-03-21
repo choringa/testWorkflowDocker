@@ -49,10 +49,14 @@ jobs:
           echo ${{ steps.get-version.outputs.dh_tag_version }}
           latest_from_sort=$(echo -e "${{ steps.get-version.outputs.dh_tag_version }}\n$current_version" | sort -r | head -n1)
           echo "Latest from sort: $latest_from_sort"
-          if ! [[ ${{ steps.get-version.outputs.dh_tag_version }} =~ '^[0-9]+\.[0-9]+\.[0-9]+$' ]]; then
+          if [[ ${{ steps.get-version.outputs.dh_tag_version }} =~ '^[0-9]+\.[0-9]+\.[0-9]+$' ]]; then
+            echo "todo good"
+          else
             echo "Version must be in format vn.n.n whew n is an integer. eg: v1.6.9"
             exit 1
-          elif [  ${{ steps.get-version.outputs.dh_tag_version }} = "$current_version" -o "$latest_from_sort" = "$current_version" ]; then
+          fi
+          
+          if [  ${{ steps.get-version.outputs.dh_tag_version }} = "$current_version" -o "$latest_from_sort" = "$current_version" ]; then
             echo "Version to publish must me greater than current version"
             echo "current version: " "$current_version"
             echo "version to publish: " ${{ steps.get-version.outputs.dh_tag_version }}
