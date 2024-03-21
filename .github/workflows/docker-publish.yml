@@ -54,7 +54,12 @@ jobs:
             echo "todo good"
           else
             echo "Version must be in format vn.n.n whew n is an integer. eg: v1.6.9"
-            exit 1
+          fi
+
+          if ! [[ "$version_tobe_deployed" =~ '^[0-9]+\.[0-9]+\.[0-9]+$' ]]; then
+            echo "todo mal"
+          else
+            echo "Todo re mal"
           fi
           
           if [  ${{ steps.get-version.outputs.dh_tag_version }} = "$current_version" -o "$latest_from_sort" = "$current_version" ]; then
