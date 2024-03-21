@@ -59,7 +59,7 @@ jobs:
             echo "version to publish: " ${{ steps.get-version.outputs.dh_tag_version }}
             exit 1
           else
-            echo "OK Version to deploy: v${{ steps.get-version.outputs.dh_tag_version }}"
+            echo "OK Version to deploy: v" ${{ steps.get-version.outputs.dh_tag_version }}
           fi
           
 
