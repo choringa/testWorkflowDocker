@@ -4,6 +4,7 @@ import subprocess
 app = Flask(__name__)
 
 def update():
+    print ("Starting update")
     execution_list = ['bash', './updater.sh']
     try:
         p = subprocess.run(execution_list, capture_output=True, text=True, input="n")
@@ -21,6 +22,7 @@ def hello():
     print(f"request data: {request.data}")
     print(f"request headers: {request.headers}")
     print(f"content: {content}")
+    update()
     return f'Hello, from updater!'
 
 @app.route('/')
