@@ -9,8 +9,8 @@ def hello():
     return f'Hello, World! {content}'
 
 @app.route('/')
-def hello():
+def duck():
     return f'suck my duck 🦆'
 
 if __name__ == '__main__':
-    app.run(host= '0.0.0.0', port='8080' ,debug=True)
+    app.run(host='0.0.0.0', port='8080' ,debug=True)
