@@ -7,6 +7,7 @@ app = Flask(__name__)
 def hello():
     content = request.json
     print(f"request data: {request.data}")
+    print(f"request headers: {request.headers}")
     print(f"content: {content}")
     return f'Hello, World! {content}'
 
