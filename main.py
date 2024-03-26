@@ -11,6 +11,7 @@ def hello():
 
 @app.route('/')
 def duck():
+    print("hi")
     return f'suck my duck 🦆'
 
 if __name__ == '__main__':
