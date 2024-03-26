@@ -6,6 +6,7 @@ app = Flask(__name__)
 @app.route('/webhooked', methods =['POST'])
 def hello():
     content = request.json
+    print(f"request data: {request.data}")
     print(f"content: {content}")
     return f'Hello, World! {content}'
 
