@@ -7,3 +7,6 @@ app = Flask(__name__)
 def hello():
     content = request.json
     return f'Hello, World! {content}'
+
+if __name__ == '__main__':
+    app.run(host= '0.0.0.0',debug=True)
