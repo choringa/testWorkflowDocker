@@ -43,10 +43,13 @@ def hello():
     print(f"content: {content}")
     print(f"request keys: {request.headers.keys}")
     if(request.headers.get("X-Hub-Signature-256")):
-        print(1)
         print(f"hub ignature: {request.headers.get('X-Hub-Signature-256')}")
+        verify_signature(request.data, "suckmyduck", request.headers.get("X-Hub-Signature-256"))
+        update()
+    else:
+        print(f"No X-Hub-Signature-256 or bad signature on request")
 
-    update()
+    
     return f'Hello, from updater!'
 
 @app.route('/')
