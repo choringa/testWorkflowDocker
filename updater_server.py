@@ -26,12 +26,9 @@ def update():
 
 @app.route('/webhooked', methods =['POST'])
 def hello():
-    content = request.json
-    print(f"request data: {request.data}")
-    print(f"request headers: {request.headers}")
-    print(f"content: {content}")
-    print(f"request keys: {request.headers.keys}")
+    request_dict = request.json
     if(request.headers.get("X-Hub-Signature-256")):
+        print(f"1: {request_dict.get('repository')}")
         print(f"hub ignature: {request.headers.get('X-Hub-Signature-256')}")
         verify_signature(request.data, "suckmyduck", request.headers.get("X-Hub-Signature-256"))
         update()
