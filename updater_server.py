@@ -28,12 +28,12 @@ def update():
 @app.route('/webhooked', methods =['POST'])
 def hello():
     request_dict = request.json
-    print(f"type: {type(request_dict)}, request_dict: {request_dict}")
+    #print(f"type: {type(request_dict)}, request_dict: {request_dict}")
     if(request.headers.get("X-Hub-Signature-256")):
         commits_list = request_dict.get('commits')
-        print(f"2: type: {type(commits_list)}, author_dict: {commits_list}")
+        #print(f"2: type: {type(commits_list)}, author_dict: {commits_list}")
         print (f'''Changes on VMS repository
-                    Last change made by: {commits_list[0].get('name')}({commits_list[0].get('email')})
+                    Last change made by: {commits_list[0].get('author').get('name')}({commits_list[0].get('author').get('email')})
                     added: {len(commits_list[0].get('added'))}, removed: {len(commits_list[0].get('removed'))}, modified: {len(commits_list[0].get('modified'))}
                     commit reference: {request_dict.get('after')}''')
         print(f"hub ignature: {request.headers.get('X-Hub-Signature-256')}")
