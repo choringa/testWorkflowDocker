@@ -41,6 +41,9 @@ def hello():
     print(f"request data: {request.data}")
     print(f"request headers: {request.headers}")
     print(f"content: {content}")
+    if(request.headers.has_key("X-Hub-Signature-256")):
+        print(request.headers.get("X-Hub-Signature-256"))
+
     update()
     return f'Hello, from updater!'
 
