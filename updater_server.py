@@ -28,9 +28,10 @@ def update():
 @app.route('/webhooked', methods =['POST'])
 def hello():
     request_dict = request.json
-    print(f"request_dict: {request_dict}")
+    print(f"type: {type(request_dict)}, request_dict: {request_dict}")
     if(request.headers.get("X-Hub-Signature-256")):
         author_dict = request_dict.get('author')
+        print(f"2: type: {type(author_dict)}, author_dict: {author_dict}")
         print (f"Changes on VMS repository \
                 Last change made by: {author_dict.get('name')}({author_dict.get('email')}) \
                 added: {len(request_dict.get('added'))}, removed: {len(request_dict.get('removed'))}, modified: {len(request_dict.get('modified'))} \
