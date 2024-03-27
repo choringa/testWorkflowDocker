@@ -2,6 +2,7 @@ from flask import Flask, request
 import subprocess
 import hashlib
 import hmac
+import os
 
 app = Flask(__name__)
 
@@ -28,14 +29,16 @@ def update():
 def hello():
     request_dict = request.json
     if(request.headers.get("X-Hub-Signature-256")):
-        print(f"1: {request_dict.get('repository')}")
+        print(f"1: {request_dict.get('author')}")
         print(f"hub ignature: {request.headers.get('X-Hub-Signature-256')}")
-        verify_signature(request.data, "suckmyduck", request.headers.get("X-Hub-Signature-256"))
-        update()
+        secret = os.getenv("GITHUB_WEBHOOK_SECRET")
+        if(secret):
+            verify_signature(request.data, secret, request.headers.get("X-Hub-Signature-256"))
+            update()
+        else:
+            print("No GITHUB_WEBHOOK_SECRET set on the environment variables")
     else:
-        print(f"No X-Hub-Signature-256 or bad signature on request")
-
-    
+        print(f"No X-Hub-Signature-256 header")
     return f'Hello, from updater!'
 
 @app.route('/')
