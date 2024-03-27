@@ -31,9 +31,9 @@ def hello():
     if(request.headers.get("X-Hub-Signature-256")):
         author_dict = request_dict.get('author')
         print (f"Changes on VMS repository \
-                Last change made by: {author_dict.get("name")}({author_dict.get("email")}) \
-                added: {len(request_dict.get("added"))}, removed: {len(request_dict.get("removed"))}, modified: {len(request_dict.get("modified"))} \
-                commit reference: {request_dict.get("after")}")
+                Last change made by: {author_dict.get('name')}({author_dict.get('email')}) \
+                added: {len(request_dict.get('added'))}, removed: {len(request_dict.get('removed'))}, modified: {len(request_dict.get('modified'))} \
+                commit reference: {request_dict.get('after')}")
         print(f"hub ignature: {request.headers.get('X-Hub-Signature-256')}")
         secret = os.getenv("GITHUB_WEBHOOK_SECRET")
         if(secret):
