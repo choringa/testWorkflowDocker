@@ -28,6 +28,7 @@ def update():
 @app.route('/webhooked', methods =['POST'])
 def hello():
     request_dict = request.json
+    print(f"request_dict: {request_dict}")
     if(request.headers.get("X-Hub-Signature-256")):
         author_dict = request_dict.get('author')
         print (f"Changes on VMS repository \
