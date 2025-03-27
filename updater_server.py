@@ -19,7 +19,7 @@ def update():
         p = subprocess.run(execution_list, capture_output=True, text=True, input="n")
         print(f"stdout of process: {p.stdout}")
         if p.returncode == 0:
-            print("En teoria todo good")
+            print("Update successful")
         else:
             print(f"Error: {p.stderr}")
     except Exception as e:
@@ -32,11 +32,11 @@ def hello():
     if(request.headers.get("X-Hub-Signature-256")):
         commits_list = request_dict.get('commits')
         #print(f"2: type: {type(commits_list)}, author_dict: {commits_list}")
-        print (f'''Changes on VMS repository:
+        print (f'''--->Changes on VMS repository:
     Last change made by: {commits_list[0].get('author').get('name')}({commits_list[0].get('author').get('email')})
     added: {len(commits_list[0].get('added'))}, removed: {len(commits_list[0].get('removed'))}, modified: {len(commits_list[0].get('modified'))}
     commit reference: {request_dict.get('after')}''')
-        print(f"hub ignature: {request.headers.get('X-Hub-Signature-256')}")
+        #print(f"hub ignature: {request.headers.get('X-Hub-Signature-256')}")
         secret = os.getenv("GITHUB_WEBHOOK_SECRET")
         if(secret):
             verify_signature(request.data, secret, request.headers.get("X-Hub-Signature-256"))
@@ -46,11 +46,6 @@ def hello():
     else:
         print(f"No X-Hub-Signature-256 header")
     return f'Hello, from updater!'
-
-@app.route('/')
-def duck():
-    print("updater")
-    return f'i\'m updater'
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='8080' ,debug=True)
