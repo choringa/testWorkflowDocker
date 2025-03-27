@@ -39,8 +39,11 @@ def hello():
         #print(f"hub ignature: {request.headers.get('X-Hub-Signature-256')}")
         secret = os.getenv("GITHUB_WEBHOOK_SECRET")
         if(secret):
-            verify_signature(request.data, secret, request.headers.get("X-Hub-Signature-256"))
-            update()
+            try:
+                verify_signature(request.data, secret, request.headers.get("X-Hub-Signature-256"))
+                update()
+            except Exception as e:
+                print(f"Error validating signature: {e}")
         else:
             print("No GITHUB_WEBHOOK_SECRET set on the environment variables")
     else:
